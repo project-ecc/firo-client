@@ -22,187 +22,19 @@
             <div class="inner" :class="{disabled: formDisabled, unsynced: !isBlockchainSynced}">
                 <div id="top" class="not-footer">
                     <div class="field" id="label-field">
-                        <label>
-                            Label
-                        </label>
-
-                        <input
-                            id="label"
-                            ref="label"
-                            v-model.trim="label"
-                            v-focus
-                            type="text"
-                            name="label"
-                            tabindex="1"
-                            placeholder="Label (optional)"
-                            :disabled="formDisabled"
-                        />
-                    </div>
-
-                    <div class="field" id="address-field">
-                        <label>
-                            Address
-                        </label>
-
-                        <input
-                            id="address"
-                            ref="address"
-                            v-model="address"
-                            v-validate.initial="'firoAddress'"
-                            v-tooltip="getValidationTooltip('address')"
-                            type="text"
-                            name="address"
-                            tabindex="2"
-                            placeholder="Address"
-                            spellcheck="false"
-                            :disabled="formDisabled"
-                        />
-
-                        <div id="add-to-address-book">
-                            <a href="#" :class="{disabled: formDisabled || !showAddToAddressBook}" @click="addToAddressBook">
-                                Add to Address Book
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="field" id="amount-field">
-                        <label>
-                            Amount
-                        </label>
-
-                        <div class="input-with-tip-container">
+                        <InputFrame label="Label">
                             <input
-                                id="amount"
-                                ref="amount"
-                                v-model="amount"
-                                v-validate.initial="amountValidations"
-                                v-tooltip="getValidationTooltip('amount')"
+                                id="label"
+                                ref="label"
+                                v-model.trim="label"
+                                v-focus
                                 type="text"
-                                name="amount"
-                                class="amount"
-                                tabindex="3"
-                                placeholder="Amount"
+                                name="label"
+                                tabindex="1"
+                                placeholder="Label"
                                 :disabled="formDisabled"
                             />
-
-                            <span class="tip ticker">
-                                FIRO
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <div class="custom-input-checkbox-container">
-                            <input type="checkbox" v-model="useCustomInputs" :disabled="formDisabled" />
-                            <label>
-                                <a href="#" id="custom-inputs-button" :class="{disabled: formDisabled}" @click="useCustomInputs = showCustomInputSelector = !formDisabled">
-                                    Custom Inputs (Coin Control)
-                                </a>
-                            </label>
-                        </div>
-
-                        <div v-if="useCustomInputs" class="selected-coin-value">
-                            <label>Max Send:</label>
-                            <div class="value">
-                                <amount :amount="coinControlSelectedAmount" /> <span class="ticker">FIRO</span>
-                            </div>
-                        </div>
-
-                        <Popup v-if="showCustomInputSelector" :close="() => showCustomInputSelector = false">
-                            <InputSelection v-model="customInputs" :is-private="isPrivate" />
-                        </Popup>
-                    </div>
-
-                    <div class="field use-custom-fee">
-                        <label>
-                            <input type="checkbox" v-model="useCustomFee" :disabled="formDisabled" />
-                            Custom Transaction Fee
-                        </label>
-
-                        <div v-show="useCustomFee" class="input-with-tip-container">
-                            <input
-                                id="txFeePerKb"
-                                ref="txFeePerKb"
-                                v-model="userTxFeePerKb"
-                                v-validate.initial="'txFeeIsValid'"
-                                v-tooltip="getValidationTooltip('txFeePerKb')"
-                                :placeholder="smartFeePerKb"
-                                type="text"
-                                name="txFeePerKb"
-                                tabindex="4"
-                            />
-
-                            <span class="tip">
-                                sat/kb
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="field" id="subtract-fee-from-amount">
-                        <input v-model="subtractFeeFromAmount" type="checkbox" checked :disabled="formDisabled" />
-                        <label>
-                            Take Transaction Fee From Amount
-                        </label>
-                    </div>
-                </div>
-
-                <div id="bottom">
-                    <div id="totals" class="not-footer">
-                        <div class="total-field" id="receive-amount">
-                            <label>
-                                Recipient will receive:
-                            </label>
-
-                            <div v-if="transactionFee" class="value">
-                                <amount :amount="amountToReceive" /> <span class="ticker">FIRO</span>
-                            </div>
-                            <div v-else class="value" />
-                        </div>
-
-                        <div class="total-field" id="transaction-fee">
-                            <label>
-                                Transaction fee:
-                            </label>
-
-                            <div v-if="transactionFee" class="value">
-                                <amount :amount="transactionFee" /> <span class="ticker">FIRO</span>
-                            </div>
-                            <div v-else class="value" />
-                        </div>
-
-                        <div class="total-field" id="total-amount">
-                            <label>
-                                Total:
-                            </label>
-
-                            <div v-if="transactionFee" class="value">
-                                <amount :amount="totalAmount" /> <span class="ticker">FIRO</span>
-                            </div>
-
-                            <div v-else class="value" />
-                        </div>
-
-                        <div v-if="transactionFeeError" class="error">
-                            {{ transactionFeeError }}
-                        </div>
-                    </div>
-
-                    <SendFlow
-                        :disabled="!canBeginSend"
-                        :is-private="isPrivate"
-                        :label="label"
-                        :address="address"
-                        :amount="satoshiAmount"
-                        :tx-fee-per-kb="txFeePerKb"
-                        :computed-tx-fee="transactionFee || 0"
-                        :subtract-fee-from-amount="subtractFeeFromAmount"
-                        :coin-control="coinControl"
-                        class="not-footer"
-                        @success="() => (feeMap = {}) && cleanupForm()"
-                    />
-
-                    <div class="footer">
-                        <PrivatePublicBalance :disabled="!isBlockchainSynced" v-model="isPrivate" />
+                        </InputFrame>
                     </div>
                 </div>
             </div>
@@ -224,6 +56,7 @@ import AnimatedTable from "renderer/components/AnimatedTable/AnimatedTable";
 import AddressBookItemEditableLabel from "renderer/components/AnimatedTable/AddressBookItemEditableLabel";
 import AddressBookItemAddress from "renderer/components/AnimatedTable/AddressBookItemAddress";
 import PrivatePublicBalance from "renderer/components/shared/PrivatePublicBalance";
+import InputFrame from "renderer/components/shared/InputFrame";
 
 export default {
     name: 'SendPage',
@@ -234,7 +67,8 @@ export default {
         SendFlow,
         Amount,
         InputSelection,
-        Popup
+        Popup,
+        InputFrame
     },
 
     inject: [
@@ -559,10 +393,6 @@ export default {
         height: 100%;
         background-color: var(--color-detail-background);
 
-        label {
-            @include label();
-        }
-
         .input-with-tip-container {
             width: fit-content;
             position: relative;
@@ -572,10 +402,6 @@ export default {
                 bottom: $size-input-vertical-padding;
                 right: $size-input-horizontal-padding;
             }
-        }
-
-        .ticker {
-            @include ticker();
         }
 
         .inner {
@@ -590,68 +416,8 @@ export default {
             #top {
                 flex-grow: 1;
 
-                .field {
-                    width: fit-content;
-
-                    &:not(:first-child) {
-                        margin-top: $size-between-field-space-big;
-                    }
-
-                    label, input[type="text"] {
-                        display: block;
-                    }
-
-                    input[type="text"] {
-                        @include wide-input-field();
-                    }
-
-                    &#address-field {
-                        input {
-                            @include address();
-                        }
-
-                        #add-to-address-book {
-                            text-align: right;
-
-                            a {
-                                @include small();
-                                @include optional-action;
-
-                                &.disabled {
-                                    cursor: default;
-                                    opacity: 0.3;
-                                }
-                            }
-                        }
-                    }
-
-                    &#select-custom-inputs {
-                        a {
-                            @include optional-action();
-                        }
-                    }
-
-                    &#subtract-fee-from-amount {
-                        * {
-                            display: inline;
-                        }
-                    }
-
-                    .custom-input-checkbox-container {
-                        * {
-                            display: inline-block;
-                        }
-
-                        a.disabled {
-                            cursor: default;
-                        }
-                    }
-
-                    .selected-coin-value {
-                        * {
-                            display: inline;
-                        }
-                    }
+                .framed-input {
+                    width: 100%;
                 }
             }
 
