@@ -21,21 +21,50 @@
         <section class="send-detail">
             <div class="inner" :class="{disabled: formDisabled, unsynced: !isBlockchainSynced}">
                 <div id="top" class="not-footer">
-                    <div class="field" id="label-field">
-                        <InputFrame label="Label">
-                            <input
-                                id="label"
-                                ref="label"
-                                v-model.trim="label"
-                                v-focus
-                                type="text"
-                                name="label"
-                                tabindex="1"
-                                placeholder="Label"
-                                :disabled="formDisabled"
-                            />
-                        </InputFrame>
-                    </div>
+                    <InputFrame label="Label">
+                        <input
+                            id="label"
+                            ref="label"
+                            v-model.trim="label"
+                            v-focus
+                            type="text"
+                            name="label"
+                            tabindex="1"
+                            placeholder="Label"
+                            :disabled="formDisabled"
+                        />
+                    </InputFrame>
+
+                    <InputFrame label="Address">
+                        <input
+                            id="address"
+                            ref="address"
+                            v-model="address"
+                            v-validate.initial="'firoAddress'"
+                            v-tooltip="getValidationTooltip('address')"
+                            type="text"
+                            name="address"
+                            tabindex="2"
+                            placeholder="Address"
+                            spellcheck="false"
+                            :disabled="formDisabled"
+                        />
+                    </InputFrame>
+
+                    <InputFrame label="Amount">
+                        <input
+                            id="amount"
+                            ref="amount"
+                            v-model="amount"
+                            v-validate.initial="amountValidations"
+                            v-tooltip="getValidationTooltip('amount')"
+                            type="text"
+                            name="amount"
+                            class="amount"
+                            tabindex="3"
+                            placeholder="Amount"
+                        />
+                    </InputFrame>
                 </div>
             </div>
         </section>

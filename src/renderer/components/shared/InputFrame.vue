@@ -2,7 +2,7 @@
     <div class="framed-input">
         <label>{{ label }}</label>
         <div class="frame">
-            <input type="text" />
+            <slot />
         </div>
     </div>
 </template>
@@ -17,6 +17,7 @@ export default {
 <style scoped lang="scss">
 .framed-input {
     position: relative;
+    height: 50px;
 
     label {
         position: absolute;
