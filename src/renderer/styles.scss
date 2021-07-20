@@ -7,3 +7,25 @@
 * {
   box-sizing: border-box;
 }
+
+input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+
+  -webkit-appearance: none;
+  outline: none;
+  border: {
+    width: 1px;
+    radius: 3px;
+    style: solid;
+    color: rgba(60, 57, 57, 0.6);
+  }
+
+  &:hover {
+    border-color: var(--color-secondary);
+  }
+
+  &:checked {
+    background-color: var(--color-secondary);
+  }
+}
